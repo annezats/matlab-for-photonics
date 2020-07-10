@@ -24,7 +24,7 @@ subplot(1,3,3)
 d=divergence(x,y,i,j)
 pcolor(x,y,d)
 %c
-i=cos(x*y).
+i=cos(x*y)
 j=sin(x*y)
 figure
 subplot(1,3,1)

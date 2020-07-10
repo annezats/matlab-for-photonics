@@ -1,7 +1,7 @@
 clear
 % angle of incidence (arbitrary constant)
-ti=pi/18 %depending on the angle i'm getting different results
-Ni= 1.003 %air is a constant
+ti=pi/5 %depending on the angle i'm getting different results
+Ni= 1.0003 %air is a constant
 %-------------------------
 material= importdata("silicon.csv", ",",1)
 %switch name to silicon.csv

@@ -46,7 +46,7 @@ while (l <= lindex)  % wavelength
     % vacuum wavevector
     k0 = 2*pi/lambda;
 
-    % component along surface
+    % component along surface 
     k0z = k0*N0*sin(theta0);
 
     % get array of fresnel coefficients
