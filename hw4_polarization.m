@@ -6,7 +6,7 @@ clear
 %some constants
 k= pi/2 %wave vector (frequency)
 %our direction of propogation
-z=0:0.2:4*pi
+z=0:0.1:2*pi
 
 %% Linear Polarization
 E1= 1 %amplitude
@@ -21,7 +21,7 @@ hold on
 %----total polarization
 plot3(z,x,y,'LineWidth',2)
 %----x-y projection
-plot3(z*0,x,y,'LineWidth',2)
+plot3(z*0+2*pi,x,y,'LineWidth',2)
 %-----x and y components
 plot3(z,x,y*0,'LineWidth',2)
 quiver3(z,0*z,0*z,0*z,x,y*0,'AutoScale','off','LineWidth',0.5,'ShowArrowHead', 'off')
@@ -31,14 +31,14 @@ quiver3(z,0*z,0*z,0*z,x*0,y,'AutoScale','off','LineWidth',0.5,'ShowArrowHead', '
 plot(z,z*0,'LineWidth',2)
 %---making it pretty
 grid on
-xlim([0 4*pi]);
+xlim([0 2*pi]);
 ylim([-1*E1 E1]);
 zlim([-1*E2 E2]);
 title('linear polarization')
 xlabel('z'); 
 ylabel('x');
 zlabel('y');
-view(-40,40);
+view(-60,40);
 hold off
 
 %% Circular Polarization
@@ -54,7 +54,7 @@ hold on
 %----total polarization
 plot3(z,x,y,'LineWidth',2)
 %----x-y projection
-plot3(z*0,x,y,'LineWidth',2)
+plot3(z*0+2*pi,x,y,'LineWidth',2)
 %-----x and y components
 plot3(z,x,y*0,'LineWidth',2)
 quiver3(z,0*z,0*z,0*z,x,y*0,'AutoScale','off','LineWidth',0.5,'ShowArrowHead', 'off')
@@ -64,14 +64,14 @@ quiver3(z,0*z,0*z,0*z,x*0,y,'AutoScale','off','LineWidth',0.5,'ShowArrowHead', '
 plot(z,z*0,'LineWidth',2)
 %---making it pretty
 grid on
-xlim([0 4*pi]);
+xlim([0 2*pi]);
 ylim([-1*E3 E3]);
 zlim([-1*E4 E4]);
 title('circular polarization')
 xlabel('z'); 
 ylabel('x');
 zlabel('y');
-view(-40,40);
+view(-60,40);
 hold off
 
 %% Elliptical Polarization
@@ -87,7 +87,7 @@ hold on
 %----total polarization
 plot3(z,x,y,'LineWidth',2)
 %----x-y projection
-plot3(z*0,x,y,'LineWidth',2)
+plot3(z*0+2*pi,x,y,'LineWidth',2)
 %-----x and y components
 plot3(z,x,y*0,'LineWidth',2)
 quiver3(z,0*z,0*z,0*z,x,y*0,'AutoScale','off','LineWidth',0.5,'ShowArrowHead', 'off')
@@ -97,14 +97,14 @@ quiver3(z,0*z,0*z,0*z,x*0,y,'AutoScale','off','LineWidth',0.5,'ShowArrowHead', '
 plot(z,z*0,'LineWidth',2)
 %---making it pretty
 grid on
-xlim([0 4*pi]);
+xlim([0 2*pi]);
 ylim([-1*E5 E5]);
 zlim([-1*E6 E6]);
 title('elliptical polarization')
 xlabel('z'); 
 ylabel('x');
 zlabel('y');
-view(-40,40);
+view(-60,40);
 hold off
 
 %Brought to you by Anne Zats, Natascha Krishnanand, and Anton Kyrylenko

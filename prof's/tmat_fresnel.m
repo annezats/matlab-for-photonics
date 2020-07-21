@@ -1,5 +1,5 @@
 % fresnel coefficients calculator
-function fmat = fresnel_from_prof(N0, N1, k0, k0z)
+function fmat = tmat_fresnel(N0, N1, k0, k0z)
 % calculate the fresnel coefficients for a plane wave
 
 % calculate components normal to surface
@@ -19,6 +19,6 @@ fmat(3) = ((N0^2)*k1x-(N1^2)*k0x)/((N0^2)*k1x+(N1^2)*k0x);
 % t12P
 fmat(4) = (2*N0*N1*k0x)/((N0^2)*k1x+(N1^2)*k0x);
 
-
 end
+
 

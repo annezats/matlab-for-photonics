@@ -80,7 +80,8 @@ while (l <= lindex)  % wavelength
     e=2.71828 ;
     
     %propogation matrix through material 1
-    T1=[ e^(j*kx1*d1) 0; 0 e^(-j*kx1*d1)];
+    T1=[ e^(-j*kx1*d1) 0; 0 e^(j*kx1*d1)]; %flipped the j and -j
+    %so that it doesnt have negative absorption
     
     % get array of fresnel coefficients
     % rijS, tijS, rijP, tijS
