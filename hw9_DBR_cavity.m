@@ -14,30 +14,13 @@ sample(1).repeat = 1;
 sample(1).lambda = 300*10^-9:100*10^-9:20000*10^-9;
 sample(1).N = (1.00027717 + 0*1i).*ones(1,size(sample(1).lambda,2));
 
-% single intermediate layer example
-sample(2).thickness = 30E-9;
-sample(2).repeat = 1;
-
-% sample(2).material = {'Ag'};
-% sample(2).lambda = M.Ag.wavelength*10^-9;
-% sample(2).N = M.Ag.n + (M.Ag.k).*1i;
-
-% sample(2).material = {'Au'};
-% sample(2).lambda = M.Au.wavelength*10^-9;
-% sample(2).N = M.Au.n + (M.Au.k).*1i;
-
-% sample(2).material = {'Cu'};
-% sample(2).lambda = M.Cu.wavelength*10^-9;
-% sample(2).N = M.Cu.n + (M.Cu.k).*1i;
-
-Cu=importdata('copper.csv')
-sample(2).material = {'Cu'};
-sample(2).lambda = Cu.data(:,1)*10^-9;
-sample(2).N = Cu.data(:,2) + (Cu.data(:,3)).*1i;
-
-% sample(2).material = {'Al'};
-% sample(2).lambda = M.Al.wavelength*10^-9;
-% sample(2).N = M.Al.n + (M.Al.k).*1i;
+n=12;
+m=n;
+sample(2).material = {'n1', 'n2'};
+sample(2).thickness = {110E-9, 80E-9};
+sample(2).repeat = m;
+sample(2).lambda = {sample(1).lambda, sample(1).lambda};
+sample(2).N = {(1.5).*ones(1,size(sample(1).lambda,2)),(2).*ones(1,size(sample(1).lambda,2))};
 
 sample(3).material = {'PMMA'};
 sample(3).thickness = 160E-9;
@@ -45,14 +28,13 @@ sample(3).repeat = 1;
 sample(3).lambda = (M.PMMA.wavelength)*10^-9;
 sample(3).N = M.PMMA.n + (M.PMMA.k).*1i;
 
-% single intermediate layer example
 sample(4).material = sample(2).material;
-sample(4).thickness = 100E-9;
-sample(4).repeat = 1;
+sample(4).thickness = sample(2).thickness;
+sample(4).repeat = n;
 sample(4).lambda = sample(2).lambda;
 sample(4).N = sample(2).N;
 
-% % substrate layer
+% substrate layer
 sample(5).material = {'glass'};
 sample(5).repeat = 1;
 sample(5).lambda = (M.glass.wavelength)*10^-9;
@@ -223,8 +205,6 @@ while(j<=jmax)
     j=j+1;
 end
 
-
-
  clear i; clear j; clear k;
  %clear n_entries; clear n_layers;
  clear imax; clear jmax;
@@ -244,6 +224,7 @@ end
 % subplot(2,1,2), plot(lambda_a,Tr_S,lambda_a,Tr_P), title('Transmission Coeff'), legend('S','P')
 % ylim([0,1])
 % set(gca,'fontsize', 16);
+
 figure
 subplot(3,1,1), plot(lambda_a,Re_S,lambda_a,Re_P), title('Reflection Coeff'), legend('S','P')
 ylim([0,1])
@@ -254,7 +235,7 @@ set(gca,'fontsize', 14);
 subplot(3,1,3), plot(lambda_a,Abs_S,lambda_a,Abs_P), title('Absorption Coeff'), legend('S','P')
 ylim([0,1])
 set(gca,'fontsize', 14);
-sgtitle('Copper')
+sgtitle('4')
 
 % lambda_eV = 1240./(lambda_a/10^-9);
 % imagesc(theta0degrees_a,lambda_eV, Re_P)
@@ -264,7 +245,36 @@ sgtitle('Copper')
 % ylim([1.5,3.5])
 % set(gca,'fontsize', 16);
 
+%% q factor 
+
+%resonant freq= x when y=0, or ymin
+six=1000;%index of lambda=6
+seven=1700;%index of lambda=7
+[FWHM,x,xin]=FWHMfunc(lambda_a,Tr_P,six,seven);
+Q=x/FWHM
+
+%% photon lifetime:
+c0=3*10^8;
+v=c0./lambda_a;
+[vFWHM,vx,vxin]=FWHMfunc(v,Tr_P,six,seven);%dont make a func w the same name as a var
+vFWHM=-1*vFWHM
+tp=1/(2*pi*vFWHM)%tp=1/(fsr*(1-R^2))%1/(2*pi*fsr)%=Q/(2*pi*c)%photon lifetime
 
 
-
-
+%% round trips
+%q=2*(sample(3).thickness)/x; %integer...is not an integer...the relation between res. freq and thickness
+% F=Q/q; %Q=qF Finesse
+fsr=vFWHM;%fsr=F/FWHM; % F=fsr/FWHM
+% n=1;
+% c=c0/n %speed of light in cavity= speed of light in vacuum/n
+c=v(vxin);
+n=c0/c;
+theta=0;
+fsr=c/(2*n*(sample(3).thickness)*cos(theta)); %full spectral range
+%THINGS I DO NOT KNOW:
+% c,speed of light in cavity is this not frequency at the cavity mode?
+% n of cavity??
+%R1 and R2 of the cavity=the reflection of each DBR=R^2
+%R=0.02216 %from hw 5 for 4=0.03097 6=0.02216
+rt=1/fsr; %1 round trip
+trips=tp/rt%=1/2*pi?? %number of round trips =1/2pi*FWHM1^2

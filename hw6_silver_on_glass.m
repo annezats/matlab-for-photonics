@@ -61,7 +61,7 @@ while (l <= lindex)  % wavelength
 
     % get array of fresnel coefficients
     % rijS, tijS, rijP, tijS
-    f01 = fresnel_from_prof(N0,N1,k0,k0z);
+    f01 = fresnel(N0,N1,k0,k0z);
 
     % transfer matrix from 0 to 1
     % S polarization
@@ -85,7 +85,7 @@ while (l <= lindex)  % wavelength
     
     % get array of fresnel coefficients
     % rijS, tijS, rijP, tijS
-    f12 = fresnel_from_prof(N1,N2,k0,k0z); %pretty sure k0 stays the same?
+    f12 = fresnel(N1,N2,k0,k0z); %pretty sure k0 stays the same?
 
     % transfer matrix from 1 to 2
     % S polarization
