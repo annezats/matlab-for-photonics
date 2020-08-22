@@ -32,7 +32,7 @@ sample(2).repeat = 1;
 
 Cu=importdata('copper.csv')
 sample(2).material = {'Cu'};
-sample(2).lambda = Cu.data(:,1)*10^-9;
+sample(2).lambda = Cu.data(:,1)*10^-6;
 sample(2).N = Cu.data(:,2) + (Cu.data(:,3)).*1i;
 
 % sample(2).material = {'Al'};
@@ -47,7 +47,7 @@ sample(3).N = M.PMMA.n + (M.PMMA.k).*1i;
 
 % single intermediate layer example
 sample(4).material = sample(2).material;
-sample(4).thickness = 100E-9;
+sample(4).thickness = 160E-9;
 sample(4).repeat = 1;
 sample(4).lambda = sample(2).lambda;
 sample(4).N = sample(2).N;
@@ -263,6 +263,24 @@ sgtitle('Copper')
 % ylabel('energy')
 % ylim([1.5,3.5])
 % set(gca,'fontsize', 16);
+%% q factor 
+
+%resonant freq= x when y=0, or ymin
+six=1;%index of lambda=6 is 1000
+seven=2000;%index of lambda=7 is 1700
+[FWHM,x,xin]=FWHMfunc(lambda_a,Tr_P,six,seven)
+Q=x/FWHM
+
+%% photon lifetime:
+c0=3*10^8;
+v=c0./lambda_a;
+[vFWHM,vx,vxin]=FWHMfunc(v,Tr_P,six,seven);%dont make a func w the same name as a var
+vFWHM=-1*vFWHM
+tp=1/(2*pi*vFWHM)%tp=1/(fsr*(1-R^2))%1/(2*pi*fsr)%=Q/(2*pi*c)%photon lifetime
+
+
+%% round trips
+
 
 
 

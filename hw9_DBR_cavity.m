@@ -14,7 +14,7 @@ sample(1).repeat = 1;
 sample(1).lambda = 300*10^-9:100*10^-9:20000*10^-9;
 sample(1).N = (1.00027717 + 0*1i).*ones(1,size(sample(1).lambda,2));
 
-n=12;
+n=4;
 m=n;
 sample(2).material = {'n1', 'n2'};
 sample(2).thickness = {110E-9, 80E-9};
@@ -50,7 +50,7 @@ theta0degrees_a = 0;
 theta0_a = theta0degrees_a * (pi/180);
 
 % wavelengths to calculate
-lambda_a = linspace(400E-9, 800E-9, 2000);
+lambda_a = linspace(625E-9, 725E-9, 3000);
 %lambda_a = 500E-9;
 
 % make sure sample file has already been constructed
@@ -248,9 +248,9 @@ sgtitle('4')
 %% q factor 
 
 %resonant freq= x when y=0, or ymin
-six=1000;%index of lambda=6
-seven=1700;%index of lambda=7
-[FWHM,x,xin]=FWHMfunc(lambda_a,Tr_P,six,seven);
+six=1;%index of lambda=6 is 1000
+seven=3000;%index of lambda=7 is 1700
+[FWHM,x,xin]=FWHMfunc(lambda_a,Tr_P,six,seven)
 Q=x/FWHM
 
 %% photon lifetime:
@@ -262,6 +262,7 @@ tp=1/(2*pi*vFWHM)%tp=1/(fsr*(1-R^2))%1/(2*pi*fsr)%=Q/(2*pi*c)%photon lifetime
 
 
 %% round trips
+
 %q=2*(sample(3).thickness)/x; %integer...is not an integer...the relation between res. freq and thickness
 % F=Q/q; %Q=qF Finesse
 fsr=vFWHM;%fsr=F/FWHM; % F=fsr/FWHM
@@ -276,5 +277,6 @@ fsr=c/(2*n*(sample(3).thickness)*cos(theta)); %full spectral range
 % n of cavity??
 %R1 and R2 of the cavity=the reflection of each DBR=R^2
 %R=0.02216 %from hw 5 for 4=0.03097 6=0.02216
-rt=1/fsr; %1 round trip
-trips=tp/rt%=1/2*pi?? %number of round trips =1/2pi*FWHM1^2
+dist=tp*c0/n;
+rt=dist/x
+rttime=rt*c/n
